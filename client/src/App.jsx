@@ -2,6 +2,7 @@ import "./App.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import TripCard from "./components/TripCard";
+import { Toaster } from "sonner";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -13,6 +14,18 @@ function App() {
     );
     console.log(response.data.data);
     setTrips(response.data.data);
+  };
+
+  const handleClickTag = (tag) => {
+    const keywords = search.trim().split(/\s+/).filter(Boolean);
+
+    if (keywords.includes(tag)) {
+      return;
+    }
+
+    const newSearch = [...keywords, tag].join(" ");
+    setSearch(newSearch);
+    handleSearch(newSearch);
   };
 
   useEffect(() => {
@@ -48,9 +61,11 @@ function App() {
 
       <div className="mx-auto max-w-[1150px] space-y-10">
         {trips.map((trip) => (
-          <TripCard key={trip.eid} trip={trip} />
+          <TripCard key={trip.eid} trip={trip} onClickTag={handleClickTag} />
         ))}
       </div>
+
+      <Toaster richColors />
     </div>
   );
 }
