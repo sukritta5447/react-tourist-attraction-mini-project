@@ -1,1 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit&family=Kodchasan&display=swap");
 @import "tailwindcss";
+
+body {
+  font-family: "Kanit", sans-serif;
+  line-height: 1.5;
+}
