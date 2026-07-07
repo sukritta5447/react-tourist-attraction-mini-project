@@ -1,6 +1,12 @@
 import { Link as LinkIcon } from "lucide-react";
 import { toast } from "sonner";
 
+function getShortDescription(description) {
+  return description.length > 100
+    ? description.slice(0, 100) + "..."
+    : description;
+}
+
 function TripCard({ trip, onClickTag }) {
   return (
     <div className="mb-12 flex w-full flex-col gap-4 md:h-[250px] md:flex-row md:items-start md:gap-8">
@@ -25,9 +31,7 @@ function TripCard({ trip, onClickTag }) {
             </a>
           </h2>
           <p className="mt-1 line-clamp-2 text-sm leading-5 text-gray-500">
-            {trip.description.length > 100
-              ? trip.description.slice(0, 100) + "..."
-              : trip.description}
+            {getShortDescription(trip.description)}
           </p>
           <a
             className="text-sky-500 underline"
@@ -53,21 +57,14 @@ function TripCard({ trip, onClickTag }) {
             ))}
           </p>
           <div className="mt-3 flex flex-wrap gap-4 md:gap-6">
-            <img
-              className="h-[80px] w-[80px] rounded-xl object-cover md:h-[88px] md:w-[88px]"
-              src={trip.photos[1]}
-              alt={trip.title}
-            />
-            <img
-              className="h-[80px] w-[80px] rounded-xl object-cover md:h-[88px] md:w-[88px]"
-              src={trip.photos[2]}
-              alt={trip.title}
-            />
-            <img
-              className="h-[80px] w-[80px] rounded-xl object-cover md:h-[88px] md:w-[88px]"
-              src={trip.photos[3]}
-              alt={trip.title}
-            />
+            {trip.photos.slice(1).map((photo) => (
+              <img
+                className="h-[80px] w-[80px] rounded-xl object-cover md:h-[88px] md:w-[88px]"
+                key={photo}
+                src={photo}
+                alt={trip.title}
+              />
+            ))}
           </div>
         </div>
 

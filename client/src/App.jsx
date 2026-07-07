@@ -12,7 +12,6 @@ function App() {
     const response = await axios.get(
       `http://localhost:4001/trips?keywords=${keyword}`,
     );
-    console.log(response.data.data);
     setTrips(response.data.data);
   };
 
