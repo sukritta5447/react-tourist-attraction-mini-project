@@ -1,6 +1,7 @@
 import { Link as LinkIcon } from "lucide-react";
+import { toast } from "sonner";
 
-function TripCard({ trip }) {
+function TripCard({ trip, onClickTag }) {
   return (
     <div className="mb-12 flex w-full flex-col gap-4 md:h-[250px] md:flex-row md:items-start md:gap-8">
       <a
@@ -41,7 +42,13 @@ function TripCard({ trip }) {
             {trip.tags.map((tag, index) => (
               <span key={tag}>
                 {index === trip.tags.length - 1 && "และ "}
-                <span className="mx-1.5 text-gray-500 underline">{tag}</span>
+                <button
+                  className="mx-1.5 cursor-pointer text-gray-500 underline"
+                  type="button"
+                  onClick={() => onClickTag(tag)}
+                >
+                  {tag}
+                </button>
               </span>
             ))}
           </p>
@@ -64,15 +71,17 @@ function TripCard({ trip }) {
           </div>
         </div>
 
-        <a
+        <button
           className="mt-2 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-sky-400 text-sky-400 md:ml-10 md:mt-auto"
-          href={trip.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`เปิดลิงก์ ${trip.title}`}
+          type="button"
+          aria-label={`คัดลอกลิงก์ ${trip.title}`}
+          onClick={() => {
+            navigator.clipboard.writeText(trip.url);
+            toast.success("คัดลอกลิงก์เรียบร้อย");
+          }}
         >
           <LinkIcon size={28} />
-        </a>
+        </button>
       </div>
     </div>
   );
